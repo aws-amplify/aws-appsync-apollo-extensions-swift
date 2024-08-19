@@ -1,0 +1,28 @@
+{
+  "schemaNamespace" : "AppSyncAPI",
+  "input" : {
+    "operationSearchPaths" : [
+      "graphql/*.graphql"
+    ],
+    "schemaSearchPaths" : [
+      "graphql/*.json"
+    ]
+  },
+  "output" : {
+    "testMocks" : {
+      "none" : {
+      }
+    },
+    "schemaTypes" : {
+      "path" : "./AppSyncAPI",
+      "moduleType" : {
+        "swiftPackageManager" : {
+        }
+      }
+    },
+    "operations" : {
+      "inSchemaModule" : {
+      }
+    }
+  }
+}

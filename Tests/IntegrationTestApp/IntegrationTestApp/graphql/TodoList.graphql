@@ -1,0 +1,12 @@
+query MyQuery {
+  listTodos {
+    items {
+      id
+      updatedAt
+      createdAt
+      content
+      owner
+    }
+    nextToken
+  }
+}
