@@ -6,7 +6,7 @@
       "location" : "https://github.com/aws-amplify/amplify-swift.git",
       "state" : {
         "branch" : "lawmicha.apollo",
-        "revision" : "86c7e5f4033ff5e0686839fe6f63f32ced5e059e"
+        "revision" : "22ae18b521a1d67deced0d06dcacce0bfabd2165"
       }
     },
     {
@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/aws-amplify/amplify-ui-swift-authenticator",
       "state" : {
-        "revision" : "6561a42866883bd446f33ddb447215d0357d0e43",
-        "version" : "1.1.5"
+        "revision" : "0fcd480946096e1d54b11fcd470e3fe63d2c0f67",
+        "version" : "1.1.6"
       }
     },
     {
