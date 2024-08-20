@@ -10,12 +10,13 @@ import ApolloAPI
 import Foundation
 
 public class AppSyncInterceptor: ApolloInterceptor {
+
     public var id: String = UUID().uuidString
 
     let authorizer: AppSyncAuthorizer
+
     public init(_ authorizer: AppSyncAuthorizer) {
         self.authorizer = authorizer
-
     }
 
     public func interceptAsync<Operation>(chain: Apollo.RequestChain,
@@ -25,6 +26,9 @@ public class AppSyncInterceptor: ApolloInterceptor {
     {
         Task {
             do {
+
+                request.addHeader(name: "User-Agent", value: await PackageInfo.userAgent)
+
                 try await retrieveHeadersAndAddToRequest(request)
                 chain.proceedAsync(
                     request: request,
