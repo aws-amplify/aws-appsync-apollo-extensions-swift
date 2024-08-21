@@ -7,7 +7,7 @@
 
 import Apollo
 import XCTest
-@testable import AWSAppSyncApolloInterceptors
+@testable import AWSAppSyncApolloExtensions
 
 final class DefaultPrependInterceptorProviderTests: XCTestCase {
 

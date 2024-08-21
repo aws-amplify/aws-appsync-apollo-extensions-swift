@@ -9,7 +9,7 @@ import Amplify
 import Apollo
 import ApolloAPI
 import ApolloWebSocket
-import AWSAppSyncApolloInterceptors
+import AWSAppSyncApolloExtensions
 import AWSCognitoAuthPlugin
 import AWSPluginsCore
 import Foundation

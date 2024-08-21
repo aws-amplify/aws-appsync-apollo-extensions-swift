@@ -5,7 +5,7 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
-import AWSAppSyncApolloInterceptors
+import AWSAppSyncApolloExtensions
 import XCTest
 
 final class AuthTokenAuthorizerTests: XCTestCase {

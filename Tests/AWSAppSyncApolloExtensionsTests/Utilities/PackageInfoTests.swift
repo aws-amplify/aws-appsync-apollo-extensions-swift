@@ -7,7 +7,7 @@
 
 
 import XCTest
-@testable import AWSAppSyncApolloInterceptors
+@testable import AWSAppSyncApolloExtensions
 
 class PackageInfoTests: XCTestCase {
 

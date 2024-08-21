@@ -6,7 +6,7 @@
 //
 
 import AppSyncAPI
-import AWSAppSyncApolloInterceptors
+import AWSAppSyncApolloExtensions
 import XCTest
 @testable import IntegrationTestApp
 

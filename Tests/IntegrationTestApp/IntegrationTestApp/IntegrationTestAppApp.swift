@@ -6,7 +6,7 @@
 //
 
 import Amplify
-import AWSAppSyncApolloInterceptors
+import AWSAppSyncApolloExtensions
 import AWSCognitoAuthPlugin
 import SwiftUI
 
