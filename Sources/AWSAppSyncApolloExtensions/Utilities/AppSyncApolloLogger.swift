@@ -41,22 +41,12 @@ public enum AppSyncApolloLogger {
         }
     }
 
-    //    iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *
     static func error(_ log: String) {
-        // Always logged, no conditional check needed
-        if #available(iOS 10.0, macOS 10.12, tvOS 10.0, watchOS 3.0, *) {
-            os_log("%@", type: .error, log)
-        } else {
-            NSLog("%@", log)
-        }
+        os_log("%@", type: .error, log)
     }
 
     static func error(_ error: Error) {
-        if #available(iOS 10.0, macOS 10.12, tvOS 10.0, watchOS 3.0, *) {
-            os_log("%@", type: .error, error.localizedDescription)
-        } else {
-            NSLog("%@", error.localizedDescription)
-        }
+        os_log("%@", type: .error, error.localizedDescription)
     }
 
     static func warn(_ log: String) {
@@ -64,11 +54,7 @@ public enum AppSyncApolloLogger {
             return
         }
 
-        if #available(iOS 10.0, macOS 10.12, tvOS 10.0, watchOS 3.0, *) {
-            os_log("%@", type: .info, log)
-        } else {
-            NSLog("%@", log)
-        }
+        os_log("%@", type: .info, log)
     }
 
     static func info(_ log: String) {
@@ -76,11 +62,7 @@ public enum AppSyncApolloLogger {
             return
         }
 
-        if #available(iOS 10.0, macOS 10.12, tvOS 10.0, watchOS 3.0, *) {
-            os_log("%@", type: .info, log)
-        } else {
-            NSLog("%@", log)
-        }
+        os_log("%@", type: .info, log)
     }
 
     static func debug(_ log: String) {
@@ -88,11 +70,7 @@ public enum AppSyncApolloLogger {
             return
         }
 
-        if #available(iOS 10.0, macOS 10.12, tvOS 10.0, watchOS 3.0, *) {
-            os_log("%@", type: .debug, log)
-        } else {
-            NSLog("%@", log)
-        }
+        os_log("%@", type: .debug, log)
     }
 
     static func verbose(_ log: String) {
@@ -100,10 +78,6 @@ public enum AppSyncApolloLogger {
             return
         }
 
-        if #available(iOS 10.0, macOS 10.12, tvOS 10.0, watchOS 3.0, *) {
-            os_log("%@", type: .debug, log)
-        } else {
-            NSLog("%@", log)
-        }
+        os_log("%@", type: .debug, log)
     }
 }
