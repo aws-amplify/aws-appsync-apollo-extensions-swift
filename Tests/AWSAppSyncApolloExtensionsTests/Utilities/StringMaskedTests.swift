@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import AWSAppSyncApolloInterceptors
+@testable import AWSAppSyncApolloExtensions
 
 final class StringMaskedTests: XCTestCase {
 

@@ -14,8 +14,6 @@
 		218CFDBB2C5A8711009D70B9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218CFDBA2C5A8711009D70B9 /* ContentView.swift */; };
 		218CFDBD2C5A8714009D70B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 218CFDBC2C5A8714009D70B9 /* Assets.xcassets */; };
 		218CFDC02C5A8714009D70B9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 218CFDBF2C5A8714009D70B9 /* Preview Assets.xcassets */; };
-		218CFDE72C5A9CC1009D70B9 /* AWSAppSyncApolloInterceptors in Frameworks */ = {isa = PBXBuildFile; productRef = 218CFDE62C5A9CC1009D70B9 /* AWSAppSyncApolloInterceptors */; };
-		218CFDF02C5AD144009D70B9 /* AWSAppSyncApolloInterceptors in Frameworks */ = {isa = PBXBuildFile; productRef = 218CFDEF2C5AD144009D70B9 /* AWSAppSyncApolloInterceptors */; };
 		218CFDF62C5AD23D009D70B9 /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 218CFDF52C5AD23D009D70B9 /* AWSCognitoAuthPlugin */; };
 		218CFDF82C5AD23D009D70B9 /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = 218CFDF72C5AD23D009D70B9 /* Amplify */; };
 		218CFDFA2C5AD408009D70B9 /* amplify_outputs.json in Resources */ = {isa = PBXBuildFile; fileRef = 218CFDF92C5AD408009D70B9 /* amplify_outputs.json */; };
@@ -28,6 +26,7 @@
 		218CFE242C5AD806009D70B9 /* AppSyncAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 218CFE232C5AD806009D70B9 /* AppSyncAPI */; };
 		21B8F2D22C62978D0042981F /* AuthTokenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8F2D12C62978D0042981F /* AuthTokenTests.swift */; };
 		21B8F2D42C6298580042981F /* IAMTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8F2D32C6298580042981F /* IAMTests.swift */; };
+		21CFD7C92C76641E0071C70F /* AWSAppSyncApolloExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 21CFD7C82C76641E0071C70F /* AWSAppSyncApolloExtensions */; };
 		21FDF39C2C62B20200481EA0 /* APIKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FDF39B2C62B20200481EA0 /* APIKeyTests.swift */; };
 		21FDF39E2C62B3E500481EA0 /* IntegrationTestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FDF39D2C62B3E500481EA0 /* IntegrationTestBase.swift */; };
 /* End PBXBuildFile section */
@@ -67,11 +66,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				218CFDF02C5AD144009D70B9 /* AWSAppSyncApolloInterceptors in Frameworks */,
 				218CFDFD2C5AD4BB009D70B9 /* Authenticator in Frameworks */,
 				21091FE22C6BA09F0023E26F /* ApolloAPI in Frameworks */,
 				218CFDF82C5AD23D009D70B9 /* Amplify in Frameworks */,
-				218CFDE72C5A9CC1009D70B9 /* AWSAppSyncApolloInterceptors in Frameworks */,
+				21CFD7C92C76641E0071C70F /* AWSAppSyncApolloExtensions in Frameworks */,
 				218CFE242C5AD806009D70B9 /* AppSyncAPI in Frameworks */,
 				21091FE02C6BA09F0023E26F /* Apollo in Frameworks */,
 				21091FE42C6BA09F0023E26F /* ApolloWebSocket in Frameworks */,
@@ -96,6 +94,7 @@
 				218CFDB72C5A8711009D70B9 /* IntegrationTestApp */,
 				218CFDC82C5A8714009D70B9 /* IntegrationTestAppTests */,
 				218CFDB62C5A8711009D70B9 /* Products */,
+				21CFD7C72C76641E0071C70F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -152,6 +151,13 @@
 			path = graphql;
 			sourceTree = "<group>";
 		};
+		21CFD7C72C76641E0071C70F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -169,8 +175,6 @@
 			);
 			name = IntegrationTestApp;
 			packageProductDependencies = (
-				218CFDE62C5A9CC1009D70B9 /* AWSAppSyncApolloInterceptors */,
-				218CFDEF2C5AD144009D70B9 /* AWSAppSyncApolloInterceptors */,
 				218CFDF52C5AD23D009D70B9 /* AWSCognitoAuthPlugin */,
 				218CFDF72C5AD23D009D70B9 /* Amplify */,
 				218CFDFC2C5AD4BB009D70B9 /* Authenticator */,
@@ -178,6 +182,7 @@
 				21091FDF2C6BA09F0023E26F /* Apollo */,
 				21091FE12C6BA09F0023E26F /* ApolloAPI */,
 				21091FE32C6BA09F0023E26F /* ApolloWebSocket */,
+				21CFD7C82C76641E0071C70F /* AWSAppSyncApolloExtensions */,
 			);
 			productName = IntegrationTestApp;
 			productReference = 218CFDB52C5A8711009D70B9 /* IntegrationTestApp.app */;
@@ -599,14 +604,6 @@
 			package = 21091FDE2C6BA09F0023E26F /* XCRemoteSwiftPackageReference "apollo-ios" */;
 			productName = ApolloWebSocket;
 		};
-		218CFDE62C5A9CC1009D70B9 /* AWSAppSyncApolloInterceptors */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = AWSAppSyncApolloInterceptors;
-		};
-		218CFDEF2C5AD144009D70B9 /* AWSAppSyncApolloInterceptors */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = AWSAppSyncApolloInterceptors;
-		};
 		218CFDF52C5AD23D009D70B9 /* AWSCognitoAuthPlugin */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 218CFDF42C5AD23D009D70B9 /* XCRemoteSwiftPackageReference "amplify-swift" */;
@@ -625,6 +622,10 @@
 		218CFE232C5AD806009D70B9 /* AppSyncAPI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AppSyncAPI;
+		};
+		21CFD7C82C76641E0071C70F /* AWSAppSyncApolloExtensions */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AWSAppSyncApolloExtensions;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

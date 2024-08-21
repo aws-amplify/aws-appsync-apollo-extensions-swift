@@ -2,7 +2,7 @@
 
 ---
 
-# AWS AppSync Apollo Interceptors for Swift
+# AWS AppSync Apollo Extensions for Swift
 
 [![GitHub](https://img.shields.io/github/license/aws-amplify/aws-appsync-apollo-interceptors-swift)](LICENSE)
 [![Discord](https://img.shields.io/discord/308323056592486420?logo=discord)](https://discord.gg/jWVbPfC)

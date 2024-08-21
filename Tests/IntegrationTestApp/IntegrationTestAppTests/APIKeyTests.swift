@@ -9,7 +9,7 @@ import Apollo
 import ApolloWebSocket
 
 import AppSyncAPI
-import AWSAppSyncApolloInterceptors
+import AWSAppSyncApolloExtensions
 import AWSPluginsCore
 
 import XCTest

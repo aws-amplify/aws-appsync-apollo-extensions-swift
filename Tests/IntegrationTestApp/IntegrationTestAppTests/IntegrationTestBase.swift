@@ -6,7 +6,7 @@
 //
 
 import Amplify
-import AWSAppSyncApolloInterceptors
+import AWSAppSyncApolloExtensions
 import XCTest
 
 class IntegrationTestBase: XCTestCase {
