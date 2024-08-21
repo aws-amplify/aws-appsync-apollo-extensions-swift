@@ -17,9 +17,10 @@ class PackageInfoTests: XCTestCase {
     func testUserAgentHasCorrectFormat() async throws {
         let format = try Regex(
             "^UA/2\\.0 " +
-            "lang/swift/\\d+\\.\\d+(?:\\.\\d+)? " +
-            "os/iOS|macOS|watchOS/\\d+\\.\\d+(?:\\.\\d+)? " +
-            "lib/aws-appsync-apollo-extensions-swift/\\d+\\.\\d+\\.\\d+$"
+            "lang/swift#\\d+\\.\\d+(?:\\.\\d+)? " +
+            "os/(?:iOS|macOS|watchOS)#\\d+\\.\\d+(?:\\.\\d+)? " +
+            "lib/aws-appsync-apollo-extensions-swift#\\d+\\.\\d+\\.\\d+ " +
+            "md/apollo#\\d+\\.\\d+\\.\\d+$"
         )
         let userAgent = await PackageInfo.userAgent
         let matches = userAgent.ranges(of: format)
