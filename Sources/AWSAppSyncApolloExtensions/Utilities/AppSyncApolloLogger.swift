@@ -41,43 +41,43 @@ public enum AppSyncApolloLogger {
         }
     }
 
-    static func error(_ log: String) {
-        os_log("%@", type: .error, log)
+    static func error(_ log: @autoclosure () -> String) {
+        os_log("%@", type: .error, log())
     }
 
-    static func error(_ error: Error) {
-        os_log("%@", type: .error, error.localizedDescription)
+    static func error(_ error: @autoclosure () -> Error) {
+        os_log("%@", type: .error, error().localizedDescription)
     }
 
-    static func warn(_ log: String) {
+    static func warn(_ log: @autoclosure () -> String) {
         guard logLevel.rawValue >= LogLevel.warn.rawValue else {
             return
         }
 
-        os_log("%@", type: .info, log)
+        os_log("%@", type: .info, log())
     }
 
-    static func info(_ log: String) {
+    static func info(_ log: @autoclosure () -> String) {
         guard logLevel.rawValue >= LogLevel.info.rawValue else {
             return
         }
 
-        os_log("%@", type: .info, log)
+        os_log("%@", type: .info, log())
     }
 
-    static func debug(_ log: String) {
+    static func debug(_ log: @autoclosure () -> String) {
         guard logLevel.rawValue >= LogLevel.debug.rawValue else {
             return
         }
 
-        os_log("%@", type: .debug, log)
+        os_log("%@", type: .debug, log())
     }
 
-    static func verbose(_ log: String) {
+    static func verbose(_ log: @autoclosure () -> String) {
         guard logLevel.rawValue >= LogLevel.verbose.rawValue else {
             return
         }
 
-        os_log("%@", type: .debug, log)
+        os_log("%@", type: .debug, log())
     }
 }
