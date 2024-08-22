@@ -7,6 +7,7 @@
 
 
 import Foundation
+import Apollo
 #if canImport(WatchKit)
 import WatchKit
 #elseif canImport(UIKit)
@@ -31,8 +32,9 @@ class PackageInfo {
         let device = UIDevice.current
         return (name: device.systemName, version: device.systemVersion)
 #else
+        let osVersion = ProcessInfo.processInfo.operatingSystemVersion
         return (name: "macOS",
-                version: ProcessInfo.processInfo.operatingSystemVersionString)
+                version: "\(osVersion.majorVersion).\(osVersion.minorVersion).\(osVersion.patchVersion)")
 #endif
     }()
 
@@ -53,11 +55,12 @@ class PackageInfo {
     static var userAgent: String {
         get async {
             let (name, version) = await Self.os
-            let compilerInfo = "lang/swift/\(swiftVersion)"
-            let osInfo = "os/\(name)/\(version)"
-            let libInfo = "lib/aws-appsync-apollo-extensions-swift/\(Self.version)"
+            let compilerInfo = "lang/swift#\(swiftVersion)"
+            let osInfo = "os/\(name)#\(version)"
+            let libInfo = "lib/aws-appsync-apollo-extensions-swift#\(Self.version)"
+            let dependenciesInfo = "md/apollo#\(Constants.ApolloVersion)"
 
-            return "UA/2.0 \(compilerInfo) \(osInfo) \(libInfo)"
+            return "UA/2.0 \(compilerInfo) \(osInfo) \(libInfo) \(dependenciesInfo)"
         }
     }
 
