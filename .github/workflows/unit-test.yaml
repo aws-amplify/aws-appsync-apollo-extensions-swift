@@ -12,7 +12,7 @@ concurrency:
 jobs:
   unit-test:
     name: "[${{ matrix.os }}] Unit Test"
-    environment: Unit Test
+    environment: Unit Test # TODO(5d): remove this line after repo is marked as public
     strategy:
       fail-fast: false
       matrix:
@@ -39,7 +39,7 @@ jobs:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
           persist-credentials: false
-          token: ${{ secrets.PAT }}
+          token: ${{ secrets.PAT }} # TODO(5d): remove this line after repo is marked as public
 
       - name: ${{ matrix.os }}
         run: |
