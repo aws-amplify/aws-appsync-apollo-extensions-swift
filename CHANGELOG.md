@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.0.0] - 2024-08-26
+## 1.0.0 - (2024-08-26)
 
 ### Features
 - Add heart beat monitor to AppSyncRTC. ([#1](https://github.com/aws-amplify/aws-appsync-apollo-extensions-swift/pull/1))
