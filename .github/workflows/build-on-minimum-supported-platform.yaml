@@ -1,0 +1,59 @@
+name: Build on minimum supported platforms
+
+on:
+  pull_request:
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-on-minimum-supported-platforms:
+    name: ${{ matrix.os }}
+    environment: Unit Test # TODO(5d): remove this line after repo is marked as public
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - scheme: AWSAppSyncApolloExtensions
+            os: iOS # Swift 5.9 (Xcode 15.0), iOS v13
+            sdk: iphonesimulator17.0
+            destination: platform=iOS Simulator,name=iPhone 14,OS=17.0
+            runner: macos-13
+            app: Xcode_15.0.1
+          - scheme: AWSAppSyncApolloExtensions
+            os: macOS # Swift 5.9 (Xcode 15.0), macOS v10_15
+            sdk: macosx14.0
+            destination: platform=OS X,arch=x86_64
+            runner: macos-13
+            app: Xcode_15.0.1
+          - scheme: AWSAppSyncApolloExtensions
+            os: watchOS # Swift 5.9 (Xcode 15.0), watchOS v9
+            sdk: watchsimulator10.0
+            destination: platform=watchOS Simulator,name=Apple Watch Series 8 (45mm),OS=10.0
+            runner: macos-13
+            app: Xcode_15.0.1
+          - scheme: AWSAppSyncApolloExtensions
+            os: tvOS # Swift 5.9 (Xcode 15.0), tvOS v13
+            sdk: appletvsimulator17.0
+            destination: platform=tvOS Simulator,name=Apple TV 4K (3rd generation),OS=17.0
+            runner: macos-13
+            app: Xcode_15.0.1
+
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          persist-credentials: false
+          token: ${{ secrets.PAT }} # TODO(5d): remove this line after repo is marked as public
+
+      - name: ${{ matrix.os }}
+        run: |
+          sudo xcode-select -s "/Applications/${{ matrix.app }}.app"
+          xcodebuild build \
+          -scheme ${{ matrix.scheme }} \
+          -destination "${{ matrix.destination }}" \
+          -sdk ${{ matrix.sdk }} \
+          | xcpretty --simple --color --report junit && exit ${PIPESTATUS[0]}
