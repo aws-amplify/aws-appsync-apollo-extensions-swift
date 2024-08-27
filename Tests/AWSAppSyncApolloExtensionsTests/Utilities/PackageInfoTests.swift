@@ -11,19 +11,17 @@ import XCTest
 
 class PackageInfoTests: XCTestCase {
 
-    @available(iOS 16.0, *)
     /// user agent header has format of:
     /// UA/2.0 lang/swift/x.x(.x) os/[iOS, macOS, watchOS]/x.x(.x) lib/aws-appsync-apollo-extensions-swift/x.x.x
     func testUserAgentHasCorrectFormat() async throws {
-        let format = try Regex(
-            "^UA/2\\.0 " +
+        let pattern = "^UA/2\\.0 " +
             "lang/swift#\\d+\\.\\d+(?:\\.\\d+)? " +
-            "os/(?:iOS|macOS|watchOS)#\\d+\\.\\d+(?:\\.\\d+)? " +
+            "os/(?:iOS|macOS|watchOS|tvOS)#\\d+\\.\\d+(?:\\.\\d+)? " +
             "lib/aws-appsync-apollo-extensions-swift#\\d+\\.\\d+\\.\\d+ " +
             "md/apollo#\\d+\\.\\d+\\.\\d+$"
-        )
+        let regex = try NSRegularExpression(pattern: pattern)
         let userAgent = await PackageInfo.userAgent
-        let matches = userAgent.ranges(of: format)
-        XCTAssertTrue(!matches.isEmpty)
+        let matches = regex.numberOfMatches(in: userAgent, options: [], range: NSRange(location: 0, length: userAgent.utf8.count))
+        XCTAssertTrue(matches > 0)
     }
 }

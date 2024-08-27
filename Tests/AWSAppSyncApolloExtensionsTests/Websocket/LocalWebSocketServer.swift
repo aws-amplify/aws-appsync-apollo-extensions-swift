@@ -96,7 +96,7 @@ class LocalWebSocketServer {
 
     func sendTransientFailureToConnections() {
         self.connections.forEach {
-            var metadata = NWProtocolWebSocket.Metadata(opcode: .close)
+            let metadata = NWProtocolWebSocket.Metadata(opcode: .close)
             metadata.closeCode = .protocolCode(NWProtocolWebSocket.CloseCode.Defined.internalServerError)
             $0.send(
                 content: nil,
