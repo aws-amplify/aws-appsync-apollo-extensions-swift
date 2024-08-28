@@ -58,7 +58,7 @@ class PackageInfo {
             let compilerInfo = "lang/swift#\(swiftVersion)"
             let osInfo = "os/\(name)#\(version)"
             let libInfo = "lib/aws-appsync-apollo-extensions-swift#\(Self.version)"
-            let dependenciesInfo = "md/apollo#\(Constants.ApolloVersion)"
+            let dependenciesInfo = "md/apollo-ios#\(Constants.ApolloVersion)"
 
             return "UA/2.0 \(compilerInfo) \(osInfo) \(libInfo) \(dependenciesInfo)"
         }
