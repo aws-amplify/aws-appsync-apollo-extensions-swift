@@ -129,8 +129,8 @@ public class AppSyncWebSocketClient: NSObject, ApolloWebSocket.WebSocketClient, 
 
             var request = self.request
             request.httpBody = Data(startRequest.data.utf8)
-            let headers = try await authorizer.getWebSocketSubscriptionPayload(request: request)
-
+            var headers = try await authorizer.getWebSocketSubscriptionPayload(request: request)
+            headers.updateValue(await PackageInfo.userAgent, forKey: "User-Agent")
             let interceptedEvent = AppSyncRealTimeStartRequest(
                 id: startRequest.id,
                 data: startRequest.data,
