@@ -578,8 +578,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/aws-amplify/amplify-swift.git";
 			requirement = {
-				branch = lawmicha.apollo;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.39.0;
 			};
 		};
 		218CFDFB2C5AD4BB009D70B9 /* XCRemoteSwiftPackageReference "amplify-ui-swift-authenticator" */ = {
