@@ -24,6 +24,7 @@
 		218CFE182C5AD66D009D70B9 /* CreateTodo.graphql in Resources */ = {isa = PBXBuildFile; fileRef = 218CFE142C5AD66D009D70B9 /* CreateTodo.graphql */; };
 		218CFE1A2C5AD6B1009D70B9 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218CFE192C5AD6B1009D70B9 /* Network.swift */; };
 		218CFE242C5AD806009D70B9 /* AppSyncAPI in Frameworks */ = {isa = PBXBuildFile; productRef = 218CFE232C5AD806009D70B9 /* AppSyncAPI */; };
+		21A12D082C88EC160003B0C5 /* AuthSignInHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A12D072C88EC160003B0C5 /* AuthSignInHelper.swift */; };
 		21B8F2D22C62978D0042981F /* AuthTokenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8F2D12C62978D0042981F /* AuthTokenTests.swift */; };
 		21B8F2D42C6298580042981F /* IAMTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B8F2D32C6298580042981F /* IAMTests.swift */; };
 		21CFD7C92C76641E0071C70F /* AWSAppSyncApolloExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 21CFD7C82C76641E0071C70F /* AWSAppSyncApolloExtensions */; };
@@ -55,6 +56,7 @@
 		218CFE132C5AD66D009D70B9 /* SubscribeTodo.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; name = SubscribeTodo.graphql; path = IntegrationTestApp/graphql/SubscribeTodo.graphql; sourceTree = SOURCE_ROOT; };
 		218CFE142C5AD66D009D70B9 /* CreateTodo.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; name = CreateTodo.graphql; path = IntegrationTestApp/graphql/CreateTodo.graphql; sourceTree = SOURCE_ROOT; };
 		218CFE192C5AD6B1009D70B9 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		21A12D072C88EC160003B0C5 /* AuthSignInHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthSignInHelper.swift; sourceTree = "<group>"; };
 		21B8F2D12C62978D0042981F /* AuthTokenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTokenTests.swift; sourceTree = "<group>"; };
 		21B8F2D32C6298580042981F /* IAMTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAMTests.swift; sourceTree = "<group>"; };
 		21FDF39B2C62B20200481EA0 /* APIKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeyTests.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 				21B8F2D32C6298580042981F /* IAMTests.swift */,
 				21FDF39B2C62B20200481EA0 /* APIKeyTests.swift */,
 				21FDF39D2C62B3E500481EA0 /* IntegrationTestBase.swift */,
+				21A12D072C88EC160003B0C5 /* AuthSignInHelper.swift */,
 			);
 			path = IntegrationTestAppTests;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 				21FDF39C2C62B20200481EA0 /* APIKeyTests.swift in Sources */,
 				21B8F2D22C62978D0042981F /* AuthTokenTests.swift in Sources */,
 				21B8F2D42C6298580042981F /* IAMTests.swift in Sources */,
+				21A12D082C88EC160003B0C5 /* AuthSignInHelper.swift in Sources */,
 				21FDF39E2C62B3E500481EA0 /* IntegrationTestBase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

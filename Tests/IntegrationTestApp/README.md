@@ -35,18 +35,75 @@ export const data = defineData({
 });
 ```
 
-`auth/resource.ts`
+Update `auth/resource.ts`
 
 ```
-import { defineAuth } from '@aws-amplify/backend';
+import { defineAuth, defineFunction } from '@aws-amplify/backend';
 
 export const auth = defineAuth({
   loginWith: {
     email: true,
   },
+  triggers: {
+    // configure a trigger to point to a function definition
+    preSignUp: defineFunction({
+      entry: './pre-sign-up-handler.ts'
+    })
+  }
 });
 
 ```
+
+Add `auth/pre-sign-up-handler.ts`
+
+```ts
+import type { PreSignUpTriggerHandler } from 'aws-lambda';
+
+export const handler: PreSignUpTriggerHandler = async (event) => {
+  // your code here
+  event.response.autoConfirmUser = true
+  return event;
+};
+```
+
+
+Update `backend.ts`
+
+```ts
+import { defineBackend } from '@aws-amplify/backend';
+import { auth } from './auth/resource';
+import { data } from './data/resource';
+
+/**
+ * @see https://docs.amplify.aws/react/build-a-backend/ to add storage, functions, and more
+ */
+const backend = defineBackend({
+  auth,
+  data,
+});
+
+// Override sign in with username as the username
+
+const { cfnUserPool } = backend.auth.resources.cfnResources
+cfnUserPool.usernameAttributes = []
+
+cfnUserPool.addPropertyOverride(
+  "Policies",
+  {
+    PasswordPolicy: {
+      MinimumLength: 10,
+      RequireLowercase: false,
+      RequireNumbers: true,
+      RequireSymbols: true,
+      RequireUppercase: true,
+      TemporaryPasswordValidityDays: 20,
+    },
+  }
+);
+
+```
+
+Run `npx ampx sandbox` to deploy your backend.
 
 Once deployed, copy the `amplify_outputs.json` over to IntegrationTestApp folder (Tests/IntegrationTestApp/IntegrationTestApp).
 

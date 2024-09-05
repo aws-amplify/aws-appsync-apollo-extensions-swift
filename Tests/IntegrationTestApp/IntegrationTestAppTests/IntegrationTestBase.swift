@@ -10,6 +10,9 @@ import AWSAppSyncApolloExtensions
 import XCTest
 
 class IntegrationTestBase: XCTestCase {
+    let username = "integTest\(UUID().uuidString)"
+    let password = "P123@\(UUID().uuidString)"
+    var defaultTestEmail = "test-\(UUID().uuidString)@amazon.com"
     override func setUp() async throws {
         AppSyncApolloLogger.logLevel = .verbose
     }
@@ -19,6 +22,6 @@ class IntegrationTestBase: XCTestCase {
             return
         }
 
-        // Sign in user either dynamically or pull from credentials file.
+        _ = try await AuthSignInHelper.registerAndSignInUser(username: username, password: password, email: defaultTestEmail) 
     }
 }
