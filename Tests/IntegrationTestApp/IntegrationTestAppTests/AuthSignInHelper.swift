@@ -12,7 +12,7 @@ enum AuthSignInHelper {
 
     static func signOut() async {
         let session = try? await Amplify.Auth.fetchAuthSession()
-        if session?.isSignedIn ?? false {
+        if session?.isSignedIn == true {
             _ = await Amplify.Auth.signOut()
         }
     }
