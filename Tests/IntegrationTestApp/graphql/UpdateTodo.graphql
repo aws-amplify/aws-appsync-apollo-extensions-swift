@@ -1,0 +1,9 @@
+mutation UpdateTodo($updateTodoInput: UpdateTodoInput!) {
+  updateTodo(input: $updateTodoInput) {
+    id
+    updatedAt
+    createdAt
+    content
+    owner
+  }
+}

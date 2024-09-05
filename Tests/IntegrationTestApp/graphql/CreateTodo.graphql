@@ -1,0 +1,9 @@
+mutation CreateTodo($createTodoInput: CreateTodoInput!) {
+  createTodo(input: $createTodoInput) {
+    id
+    updatedAt
+    createdAt
+    content
+    owner
+  }
+}
