@@ -1,9 +1,5 @@
-//
-// Copyright Amazon.com Inc. or its affiliates.
-// All Rights Reserved.
-//
-// SPDX-License-Identifier: Apache-2.0
-//
+// @generated
+// This file was automatically generated and should not be edited.
 
 @_exported import ApolloAPI
 
@@ -18,7 +14,7 @@ public class MyQuery: GraphQLQuery {
 
   public struct Data: AppSyncAPI.SelectionSet {
     public let __data: DataDict
-    public init(_dataDict: DataDict) { self.__data = _dataDict }
+    public init(_dataDict: DataDict) { __data = _dataDict }
 
     public static var __parentType: any ApolloAPI.ParentType { AppSyncAPI.Objects.Query }
     public static var __selections: [ApolloAPI.Selection] { [
@@ -32,7 +28,7 @@ public class MyQuery: GraphQLQuery {
     /// Parent Type: `ModelTodoConnection`
     public struct ListTodos: AppSyncAPI.SelectionSet {
       public let __data: DataDict
-      public init(_dataDict: DataDict) { self.__data = _dataDict }
+      public init(_dataDict: DataDict) { __data = _dataDict }
 
       public static var __parentType: any ApolloAPI.ParentType { AppSyncAPI.Objects.ModelTodoConnection }
       public static var __selections: [ApolloAPI.Selection] { [
@@ -49,7 +45,7 @@ public class MyQuery: GraphQLQuery {
       /// Parent Type: `Todo`
       public struct Item: AppSyncAPI.SelectionSet {
         public let __data: DataDict
-        public init(_dataDict: DataDict) { self.__data = _dataDict }
+        public init(_dataDict: DataDict) { __data = _dataDict }
 
         public static var __parentType: any ApolloAPI.ParentType { AppSyncAPI.Objects.Todo }
         public static var __selections: [ApolloAPI.Selection] { [

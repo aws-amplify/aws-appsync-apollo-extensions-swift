@@ -13,6 +13,7 @@ import SwiftUI
 class ContentViewModel: ObservableObject {
 
     var activeSubscription: Apollo.Cancellable?
+    var createdTodoId: String?
 
     func list() {
         Network.shared.apolloIAM.fetch(query: MyQuery(), cachePolicy: .fetchIgnoringCacheCompletely) { result in
@@ -65,6 +66,7 @@ class ContentViewModel: ObservableObject {
             case .success(let graphQLResult):
                 if let todo = graphQLResult.data?.createTodo {
                     print("Created mutation todo ", todo.id)
+                    self.createdTodoId = todo.id
                 }
                 if let errors = graphQLResult.errors {
                     print("Errors", errors)
@@ -75,6 +77,24 @@ class ContentViewModel: ObservableObject {
         }
     }
 
+    func updateMutation() {
+        guard let id = createdTodoId else {
+            return
+        }
+        Network.shared.apolloIAM.perform(mutation: UpdateTodoMutation(updateTodoInput: .init(id: id))) { result in
+            switch result {
+            case .success(let graphQLResult):
+                if let todo = graphQLResult.data?.updateTodo {
+                    print("Update mutation todo ", todo.id)
+                }
+                if let errors = graphQLResult.errors {
+                    print("Errors", errors)
+                }
+            case .failure(let error):
+                print("Error updating todo: \(error)")
+            }
+        }
+    }
 }
 
 struct ContentView: View {

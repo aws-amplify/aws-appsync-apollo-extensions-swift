@@ -3,7 +3,7 @@
 
 import ApolloAPI
 
-public struct CreateTodoInput: InputObject {
+public struct UpdateTodoInput: InputObject {
   public private(set) var __data: InputDict
 
   public init(_ data: InputDict) {
@@ -12,7 +12,7 @@ public struct CreateTodoInput: InputObject {
 
   public init(
     content: GraphQLNullable<String> = nil,
-    id: GraphQLNullable<ID> = nil
+    id: ID
   ) {
     __data = InputDict([
       "content": content,
@@ -25,7 +25,7 @@ public struct CreateTodoInput: InputObject {
     set { __data["content"] = newValue }
   }
 
-  public var id: GraphQLNullable<ID> {
+  public var id: ID {
     get { __data["id"] }
     set { __data["id"] = newValue }
   }

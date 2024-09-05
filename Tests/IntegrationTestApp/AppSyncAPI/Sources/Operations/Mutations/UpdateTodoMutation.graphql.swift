@@ -3,30 +3,36 @@
 
 @_exported import ApolloAPI
 
-public class OnCreateSubscription: GraphQLSubscription {
-  public static let operationName: String = "onCreateSubscription"
+public class UpdateTodoMutation: GraphQLMutation {
+  public static let operationName: String = "UpdateTodo"
   public static let operationDocument: ApolloAPI.OperationDocument = .init(
     definition: .init(
-      #"subscription onCreateSubscription { onCreateTodo { __typename id updatedAt createdAt content owner } }"#
+      #"mutation UpdateTodo($updateTodoInput: UpdateTodoInput!) { updateTodo(input: $updateTodoInput) { __typename id updatedAt createdAt content owner } }"#
     ))
 
-  public init() {}
+  public var updateTodoInput: UpdateTodoInput
+
+  public init(updateTodoInput: UpdateTodoInput) {
+    self.updateTodoInput = updateTodoInput
+  }
+
+  public var __variables: Variables? { ["updateTodoInput": updateTodoInput] }
 
   public struct Data: AppSyncAPI.SelectionSet {
     public let __data: DataDict
     public init(_dataDict: DataDict) { __data = _dataDict }
 
-    public static var __parentType: any ApolloAPI.ParentType { AppSyncAPI.Objects.Subscription }
+    public static var __parentType: any ApolloAPI.ParentType { AppSyncAPI.Objects.Mutation }
     public static var __selections: [ApolloAPI.Selection] { [
-      .field("onCreateTodo", OnCreateTodo?.self),
+      .field("updateTodo", UpdateTodo?.self, arguments: ["input": .variable("updateTodoInput")]),
     ] }
 
-    public var onCreateTodo: OnCreateTodo? { __data["onCreateTodo"] }
+    public var updateTodo: UpdateTodo? { __data["updateTodo"] }
 
-    /// OnCreateTodo
+    /// UpdateTodo
     ///
     /// Parent Type: `Todo`
-    public struct OnCreateTodo: AppSyncAPI.SelectionSet {
+    public struct UpdateTodo: AppSyncAPI.SelectionSet {
       public let __data: DataDict
       public init(_dataDict: DataDict) { __data = _dataDict }
 

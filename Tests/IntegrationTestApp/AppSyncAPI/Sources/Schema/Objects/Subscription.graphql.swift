@@ -1,9 +1,5 @@
-//
-// Copyright Amazon.com Inc. or its affiliates.
-// All Rights Reserved.
-//
-// SPDX-License-Identifier: Apache-2.0
-//
+// @generated
+// This file was automatically generated and should not be edited.
 
 import ApolloAPI
 
