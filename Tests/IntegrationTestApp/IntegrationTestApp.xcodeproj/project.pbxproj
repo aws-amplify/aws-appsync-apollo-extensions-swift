@@ -579,7 +579,7 @@
 			repositoryURL = "https://github.com/aws-amplify/amplify-swift.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
+				minimumVersion = 2.39.0;
 			};
 		};
 		218CFDFB2C5AD4BB009D70B9 /* XCRemoteSwiftPackageReference "amplify-ui-swift-authenticator" */ = {
