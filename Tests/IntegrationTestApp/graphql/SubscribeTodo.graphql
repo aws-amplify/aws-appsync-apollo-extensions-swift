@@ -1,0 +1,9 @@
+subscription onCreateSubscription {
+  onCreateTodo {
+    id
+    updatedAt
+    createdAt
+    content
+    owner
+  }
+}
