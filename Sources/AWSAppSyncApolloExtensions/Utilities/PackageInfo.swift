@@ -21,7 +21,7 @@ import AppKit
 
 class PackageInfo {
 
-    private static let version = "0.0.1"
+    private static let version = "1.0.0"
 
     @MainActor
     private static var os: (name: String, version: String) = {
