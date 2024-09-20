@@ -24,18 +24,23 @@ final class APIKeyTests: IntegrationTestBase {
 
     func testAPIKeyApolloClientMutation() throws {
         let completed = expectation(description: "mutation completed")
-
-        Network.shared.apolloAPIKey.perform(mutation: CreateTodoMutation(createTodoInput: .init())) { result in
+        let todoId = UUID().uuidString
+        Network.shared.apolloAPIKey.perform(
+            mutation: CreateTodoMutation(createTodoInput: .init(id: .some(todoId)))
+        ) { result in
             switch result {
             case .success(let graphQLResult):
-                guard (graphQLResult.data?.createTodo) != nil else {
+                guard let newlyCreatedTodo = graphQLResult.data?.createTodo else {
                     XCTFail("Missing created Todo")
                     return
                 }
                 if let errors = graphQLResult.errors {
                     XCTFail("Failed with errors \(errors)")
                 }
-                completed.fulfill()
+
+                if newlyCreatedTodo.id == todoId {
+                    completed.fulfill()
+                }
             case .failure(let error):
                 XCTFail("Could not create todo \(error)")
             }
@@ -84,18 +89,21 @@ final class APIKeyTests: IntegrationTestBase {
     func testSubscriptionReceivesMutation() async throws {
         AppSyncApolloLogger.logLevel = .verbose
         let receivedMutation = expectation(description: "received mutation")
-
+        let todoId = UUID().uuidString
         let activeSubscription = Network.shared.apolloAPIKey.subscribe(subscription: OnCreateSubscription()) { result in
             switch result {
             case .success(let graphQLResult):
-                guard (graphQLResult.data?.onCreateTodo) != nil else {
+                guard let newlyCreatedTodo = graphQLResult.data?.onCreateTodo else {
                     XCTFail("Missing created Todo")
                     return
                 }
                 if let errors = graphQLResult.errors {
                     XCTFail("Failed with errors \(errors)")
                 }
-                receivedMutation.fulfill()
+
+                if newlyCreatedTodo.id == todoId {
+                    receivedMutation.fulfill()
+                }
             case .failure(let error):
                 XCTFail("Could not create todo \(error)")
             }
@@ -104,17 +112,22 @@ final class APIKeyTests: IntegrationTestBase {
         try await Task.sleep(nanoseconds: 5 * 1_000_000_000) // 5 seconds
 
         let completed = expectation(description: "mutation completed")
-        Network.shared.apolloAPIKey.perform(mutation: CreateTodoMutation(createTodoInput: .init())) { result in
+        Network.shared.apolloAPIKey.perform(
+            mutation: CreateTodoMutation(createTodoInput: .init(id: .some(todoId)))
+        ) { result in
             switch result {
             case .success(let graphQLResult):
-                guard (graphQLResult.data?.createTodo) != nil else {
+                guard let newlyCreatedTodo = graphQLResult.data?.createTodo else {
                     XCTFail("Missing created Todo")
                     return
                 }
                 if let errors = graphQLResult.errors {
                     XCTFail("Failed with errors \(errors)")
                 }
-                completed.fulfill()
+
+                if newlyCreatedTodo.id == todoId {
+                    completed.fulfill()
+                }
             case .failure(let error):
                 XCTFail("Could not create todo \(error)")
             }
