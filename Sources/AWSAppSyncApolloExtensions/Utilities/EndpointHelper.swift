@@ -24,6 +24,7 @@ func appSyncApiEndpoint(_ url: URL) -> URL {
     }
 
     urlComponents.host = host.replacingOccurrences(of: "appsync-realtime-api", with: "appsync-api")
+    urlComponents.scheme = "https"
     guard let apiUrl = urlComponents.url else {
         return url
     }
@@ -44,20 +45,9 @@ func appSyncRealTimeEndpoint(_ url: URL) -> URL {
     }
 
     urlComponents.host = host.replacingOccurrences(of: "appsync-api", with: "appsync-realtime-api")
+    urlComponents.scheme = "wss"
     guard let realTimeUrl = urlComponents.url else {
         return url
     }
-
     return realTimeUrl
-}
-
-func useWebSocketProtocolScheme(url: URL) -> URL {
-    guard var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
-        return url
-    }
-    if urlComponents.scheme == "ws" || urlComponents.scheme == "wss" {
-        return url
-    }
-    urlComponents.scheme = urlComponents.scheme == "http" ? "ws" : "wss"
-    return urlComponents.url ?? url
 }
