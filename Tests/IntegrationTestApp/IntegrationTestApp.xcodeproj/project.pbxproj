@@ -29,7 +29,7 @@
 		21CFD7C92C76641E0071C70F /* AWSAppSyncApolloExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 21CFD7C82C76641E0071C70F /* AWSAppSyncApolloExtensions */; };
 		21FDF39C2C62B20200481EA0 /* APIKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FDF39B2C62B20200481EA0 /* APIKeyTests.swift */; };
 		21FDF39E2C62B3E500481EA0 /* IntegrationTestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21FDF39D2C62B3E500481EA0 /* IntegrationTestBase.swift */; };
-		60CE34112C9CDC1700DEAB45 /* amplify_outputs.json in Resources */ = {isa = PBXBuildFile; fileRef = 60CE34102C9CDC1700DEAB45 /* amplify_outputs.json */; };
+		605303912CA216590067C2EB /* amplify_outputs.json in Resources */ = {isa = PBXBuildFile; fileRef = 605303902CA216590067C2EB /* amplify_outputs.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,7 +60,8 @@
 		21B8F2D32C6298580042981F /* IAMTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAMTests.swift; sourceTree = "<group>"; };
 		21FDF39B2C62B20200481EA0 /* APIKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeyTests.swift; sourceTree = "<group>"; };
 		21FDF39D2C62B3E500481EA0 /* IntegrationTestBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntegrationTestBase.swift; sourceTree = "<group>"; };
-		60CE34102C9CDC1700DEAB45 /* amplify_outputs.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = amplify_outputs.json; path = "../../../../tmp/apollo-extension-integ-test/amplify_outputs.json"; sourceTree = "<group>"; };
+		605303902CA216590067C2EB /* amplify_outputs.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = amplify_outputs.json; sourceTree = "<group>"; };
+		605303952CA349C30067C2EB /* IntegrationTestApp.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = IntegrationTestApp.xctestplan; path = IntegrationTestAppTests/IntegrationTestApp.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +93,7 @@
 		218CFDAC2C5A8711009D70B9 = {
 			isa = PBXGroup;
 			children = (
+				605303952CA349C30067C2EB /* IntegrationTestApp.xctestplan */,
 				218CFDF32C5AD177009D70B9 /* aws-appsync-apollo-interceptors-swift */,
 				218CFDB72C5A8711009D70B9 /* IntegrationTestApp */,
 				218CFDC82C5A8714009D70B9 /* IntegrationTestAppTests */,
@@ -113,10 +115,10 @@
 			isa = PBXGroup;
 			children = (
 				21B8F2D02C5D8ACF0042981F /* graphql */,
-				60CE34102C9CDC1700DEAB45 /* amplify_outputs.json */,
 				218CFDB82C5A8711009D70B9 /* IntegrationTestAppApp.swift */,
 				218CFDBA2C5A8711009D70B9 /* ContentView.swift */,
 				218CFE192C5AD6B1009D70B9 /* Network.swift */,
+				605303902CA216590067C2EB /* amplify_outputs.json */,
 				218CFDBC2C5A8714009D70B9 /* Assets.xcassets */,
 				218CFDBE2C5A8714009D70B9 /* Preview Content */,
 			);
@@ -259,7 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				218CFE172C5AD66D009D70B9 /* SubscribeTodo.graphql in Resources */,
-				60CE34112C9CDC1700DEAB45 /* amplify_outputs.json in Resources */,
+				605303912CA216590067C2EB /* amplify_outputs.json in Resources */,
 				218CFE162C5AD66D009D70B9 /* schema.json in Resources */,
 				218CFDC02C5A8714009D70B9 /* Preview Assets.xcassets in Resources */,
 				218CFDBD2C5A8714009D70B9 /* Assets.xcassets in Resources */,
