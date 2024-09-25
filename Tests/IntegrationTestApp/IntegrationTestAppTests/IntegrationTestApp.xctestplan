@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "EE3C60B0-4D48-491A-8917-D31CEBC8B96B",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:IntegrationTestApp.xcodeproj",
+        "identifier" : "218CFDC42C5A8714009D70B9",
+        "name" : "IntegrationTestAppTests"
+      }
+    }
+  ],
+  "version" : 1
+}
