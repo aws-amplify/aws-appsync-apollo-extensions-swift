@@ -1,0 +1,108 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - release
+
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+  extract-release-version:
+    name: Extract release version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.extract-release-version.outputs.result }}
+    steps:
+      - name: Extract release version
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        id: extract-release-version
+        with:
+          result-encoding: string
+          script: |
+            const matches = `${{ github.event.head_commit.message }}`.match(/[0-9]+\.[0-9]+\.[0-9]+/) ?? []
+            return matches.length > 0 ? matches[0] : ""
+
+  validate-version-format:
+    name: Validate Version Format
+    needs:
+      - extract-release-version
+    if: ${{ needs.extract-release-version.outputs.version != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validated
+        run: echo "Releasing new version ${{ needs.extract-release-version.outputs.version }}"
+
+  unit-test:
+    name: Unit Tests
+    needs:
+      - validate-version-format
+    uses: ./.github/workflows/unit-test.yaml
+    with:
+      identifier: workflow-call-unit-test
+
+  build-on-minimum-supported-platforms:
+    name: Build on minimum supported platforms
+    needs:
+      - validate-version-format
+    uses: ./.github/workflows/build-on-minimum-supported-platform.yaml
+    with:
+      identifier: workflow-call-build-on-minimum-platforms
+
+  release:
+    name: Release new version
+    needs:
+      - extract-release-version
+      - unit-test
+      - build-on-minimum-supported-platforms
+    runs-on: ubuntu-latest
+    env:
+      RELEASE_VERSION: ${{ needs.extract-release-version.outputs.version }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+        with:
+          ref: release
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          role-session-name: ${{ format('{0}.release', github.run_id) }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Setup Github Token
+        id: setup-pat
+        env:
+          DEPLOY_SECRET_ARN: ${{ secrets.DEPLOY_SECRET_ARN }}
+        run: |
+          PAT=$(aws secretsmanager get-secret-value \
+          --secret-id "${DEPLOY_SECRET_ARN}" \
+          | jq -r ".SecretString")
+          echo "token=$PAT" >> $GITHUB_OUTPUT
+
+      - name: Create new version tag ${{ needs.extract-release-version.outputs.version }}
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        with:
+          script: |
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: `refs/tags/${process.env.RELEASE_VERSION}`,
+              sha: context.sha,
+              force: true
+            })
+
+      - name: Sync Back to Main
+        env:
+          PAT: ${{ steps.setup-pat.outputs.token }}
+          GITHUB_USER: aws-amplify-ops
+          GITHUB_EMAIL: aws-amplify-ops@amazon.com
+        run: |
+          git config user.name $GITHUB_USER
+          git config user.email $GITHUB_EMAIL
+          git push "https://${PAT}@github.com/${{ github.repository }}" HEAD:main
