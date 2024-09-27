@@ -83,7 +83,7 @@ jobs:
         run: |
           PAT=$(aws secretsmanager get-secret-value \
           --secret-id "${DEPLOY_SECRET_ARN}" \
-          | jq -r ".SecretString")
+          | jq -r ".SecretString | fromjson | .Credential")
           echo "token=$PAT" >> $GITHUB_OUTPUT
 
       - name: Create new version tag ${{ needs.extract-release-version.outputs.version }}
