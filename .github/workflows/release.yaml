@@ -53,6 +53,7 @@ jobs:
 
   release:
     name: Release new version
+    environment: Release
     needs:
       - extract-release-version
       - unit-test
