@@ -30,7 +30,6 @@ public class AppSyncWebSocketClient: NSObject, ApolloWebSocket.WebSocketClient, 
     // MARK: - Internal
 
     private let taskQueue: TaskQueue<Void>
-    private let endpointURL: URL
 
     /// The underlying URLSessionWebSocketTask
     private var connection: URLSessionWebSocketTask? {
@@ -72,13 +71,11 @@ public class AppSyncWebSocketClient: NSObject, ApolloWebSocket.WebSocketClient, 
         callbackQueue: DispatchQueue,
         authorizer: AppSyncAuthorizer
     ) {
-        self.endpointURL = useWebSocketProtocolScheme(url: appSyncRealTimeEndpoint(endpointURL))
-        self.request = URLRequest(url: self.endpointURL)
+        self.request = URLRequest(url: appSyncRealTimeEndpoint(endpointURL))
         self.delegate = delegate
         self.callbackQueue = callbackQueue
         self.authorizer = authorizer
         self.taskQueue = TaskQueue()
-        request.setValue("graphql-ws", forHTTPHeaderField: "Sec-WebSocket-Protocol")
     }
 
     public func connect() {
@@ -160,27 +157,22 @@ public class AppSyncWebSocketClient: NSObject, ApolloWebSocket.WebSocketClient, 
     // MARK: - Connect Internals
 
     private func createWebSocketConnection() async throws -> URLSessionWebSocketTask {
-        let host = appSyncApiEndpoint(endpointURL).host!
-        var headers = ["host": host]
-
-        let authHeaders = try await authorizer.getWebsocketConnectionHeaders(endpoint: endpointURL)
-        for authHeader in authHeaders {
-            headers[authHeader.key] = authHeader.value
+        guard let url = request.url else {
+            fatalError("""
+            Empty endpoint. This should not happen. 
+            Please take a look at https://github.com/aws-amplify/aws-appsync-apollo-extensions-swift/issues 
+            to see if there are any existing issues that match your scenario, and file an issue with
+            the details of the bug if there isn't.
+            """)
         }
 
-        let payload = "{}"
+        request.setValue("graphql-ws", forHTTPHeaderField: "Sec-WebSocket-Protocol")
+        request.setValue(appSyncApiEndpoint(url).host, forHTTPHeaderField: "host")
+        let authHeaders = try await authorizer.getWebsocketConnectionHeaders(endpoint: url)
+        for authHeader in authHeaders {
+            request.setValue(authHeader.value, forHTTPHeaderField: authHeader.key)
+        }
 
-        let headerJsonData = try Self.jsonEncoder.encode(headers)
-        var urlComponents = URLComponents(url: endpointURL, resolvingAgainstBaseURL: false)
-
-        urlComponents?.queryItems = [
-            URLQueryItem(name: "header", value: headerJsonData.base64EncodedString()),
-            URLQueryItem(name: "payload", value: try? payload.base64EncodedString())
-        ]
-
-        let decoratedURL = urlComponents?.url ?? endpointURL
-        request.url = decoratedURL
-        AppSyncApolloLogger.debug("[AppSyncWebSocketClient] connecting to server \(decoratedURL)")
         let urlSession = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
         return urlSession.webSocketTask(with: request)
     }

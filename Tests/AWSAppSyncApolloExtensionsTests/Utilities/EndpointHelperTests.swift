@@ -14,7 +14,7 @@ final class EndpointHelperTests: XCTestCase {
         let appSyncEndpoint = URL(string: "https://abc.appsync-api.amazonaws.com/graphql")!
         XCTAssertEqual(
             appSyncRealTimeEndpoint(appSyncEndpoint),
-            URL(string: "https://abc.appsync-realtime-api.amazonaws.com/graphql")
+            URL(string: "wss://abc.appsync-realtime-api.amazonaws.com/graphql")
         )
     }
 
@@ -22,7 +22,7 @@ final class EndpointHelperTests: XCTestCase {
         let appSyncEndpoint = URL(string: "https://abc.appsync-realtime-api.amazonaws.com/graphql")!
         XCTAssertEqual(
             appSyncRealTimeEndpoint(appSyncEndpoint),
-            URL(string: "https://abc.appsync-realtime-api.amazonaws.com/graphql")
+            URL(string: "wss://abc.appsync-realtime-api.amazonaws.com/graphql")
         )
     }
 
