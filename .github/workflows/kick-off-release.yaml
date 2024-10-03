@@ -43,7 +43,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
-          ref: main
+          fetch-depth: 0
 
       - name: Bump versions to ${{ env.RELEASE_VERSION }}
         run: |
@@ -55,6 +55,34 @@ jobs:
           git commit -am "[bump version $RELEASE_VERSION]"
           git push origin HEAD
         shell: bash
+
+      - name: Generate CHANGELOG
+        env:
+          RELEASE_VERSION: ${{ github.event.inputs.release-version }}
+        shell: bash
+        run: |
+          LOGS=$(git log --pretty=format:%s origin/release..HEAD | awk -F '\n' '{print $1}')
+          GROUPED_LOGS=$(echo $LOGS | ./.github/scripts/group-commit-message.awk)
+          awk -v date=$(date +"%Y-%m-%d") \
+            -v version="$RELEASE_VERSION" '
+            NR == 2 {
+                print "\n"
+                print "## " version " - (" date ")"
+                while (getline line < "/dev/stdin") {
+                    print line
+                }
+                next
+            }
+            {print}
+          ' CHANGELOG.md < <(echo "$GROUPED_LOGS") > temp && mv temp CHANGELOG.md
+
+      - name: Create CHANGELOG commit
+        env:
+          RELEASE_VERSION: ${{ github.event.inputs.release-version }}
+        run: |
+          git add CHANGELOG.md
+          git commit -m "chore: update CHANGELOG for $RELEASE_VERSION"
+          git push origin HEAD
 
       - name: Create Pull Request
         env:
