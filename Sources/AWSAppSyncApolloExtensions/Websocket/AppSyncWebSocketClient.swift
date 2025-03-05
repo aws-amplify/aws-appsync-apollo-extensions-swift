@@ -52,6 +52,8 @@ public class AppSyncWebSocketClient: NSObject, ApolloWebSocket.WebSocketClient, 
     /// Interceptor for appending additional info before makeing the connection
     private var authorizer: AppSyncAuthorizer
 
+    @Atomic private var isConnecting: Bool = false
+
     public convenience init(
         endpointURL: URL,
         authorizer: AppSyncAuthorizer,
@@ -80,12 +82,14 @@ public class AppSyncWebSocketClient: NSObject, ApolloWebSocket.WebSocketClient, 
 
     public func connect() {
         AppSyncApolloLogger.debug("Calling Connect")
-        guard connection?.state != .running else {
+        guard !isConnecting, connection?.state != .running else {
             AppSyncApolloLogger.debug("[AppSyncWebSocketClient] WebSocket is already in connecting state")
             return
         }
 
         subscribeToAppSyncResponse()
+
+        self.$isConnecting.mutate { $0 = true }
 
         Task {
             AppSyncApolloLogger.debug("[AppSyncWebSocketClient] Creating new connection and starting read")
@@ -93,6 +97,7 @@ public class AppSyncWebSocketClient: NSObject, ApolloWebSocket.WebSocketClient, 
             // Perform reading from a WebSocket in a separate task recursively to avoid blocking the execution.
             Task { await self.startReadMessage() }
             self.connection?.resume()
+            self.$isConnecting.mutate { $0 = false }
         }
     }
 
