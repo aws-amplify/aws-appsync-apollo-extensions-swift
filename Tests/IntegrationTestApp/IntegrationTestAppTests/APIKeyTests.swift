@@ -148,7 +148,7 @@ final class APIKeyTests: IntegrationTestBase {
         let websocket = AppSyncWebSocketClient(endpointURL: configuration.endpoint,
                                                authorizer: authorizer)
         let receivedConnection = expectation(description: "received connection")
-        receivedConnection.expectedFulfillmentCount = 200
+        receivedConnection.expectedFulfillmentCount = 100
         
         let receivedMaxSubscriptionsReachedError = expectation(description: "received MaxSubscriptionsReachedError")
         receivedMaxSubscriptionsReachedError.expectedFulfillmentCount = 5
@@ -173,7 +173,7 @@ final class APIKeyTests: IntegrationTestBase {
         let client = ApolloClient(networkTransport: splitTransport, store: store)
 
         var cancellables = [Cancellable]()
-        for _ in 1...205 {
+        for _ in 1...105 {
             cancellables.append(client.subscribe(subscription: OnCreateSubscription()) { _ in })
         }
 
