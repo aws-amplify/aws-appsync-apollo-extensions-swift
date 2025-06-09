@@ -148,9 +148,13 @@ final class APIKeyTests: IntegrationTestBase {
         let websocket = AppSyncWebSocketClient(endpointURL: configuration.endpoint,
                                                authorizer: authorizer)
         let receivedConnection = expectation(description: "received connection")
+        receivedConnection.expectedFulfillmentCount = 200
+        
         let receivedMaxSubscriptionsReachedError = expectation(description: "received MaxSubscriptionsReachedError")
-        receivedConnection.expectedFulfillmentCount = 100
+        receivedMaxSubscriptionsReachedError.expectedFulfillmentCount = 5
+        
         let sink = websocket.publisher.sink { event in
+            print("Received event: \(event)")
             if case .string(let message) = event {
                 if message.contains("start_ack") {
                     receivedConnection.fulfill()
@@ -168,12 +172,15 @@ final class APIKeyTests: IntegrationTestBase {
         )
         let client = ApolloClient(networkTransport: splitTransport, store: store)
 
-        for _ in 1...101 {
-            _ = client.subscribe(subscription: OnCreateSubscription()) { _ in
-            }
+        var cancellables = [Cancellable]()
+        for _ in 1...205 {
+            cancellables.append(client.subscribe(subscription: OnCreateSubscription()) { _ in })
         }
 
-        await fulfillment(of: [receivedConnection, receivedMaxSubscriptionsReachedError], timeout: 10)
+        await fulfillment(of: [receivedConnection, receivedMaxSubscriptionsReachedError], timeout: 15)
+        for cancellable in cancellables {
+            cancellable.cancel()
+        }
     }
 
 }
