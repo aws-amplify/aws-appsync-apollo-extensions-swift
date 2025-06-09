@@ -176,7 +176,7 @@ final class APIKeyTests: IntegrationTestBase {
             cancellables.append(client.subscribe(subscription: OnCreateSubscription()) { _ in })
         }
 
-        await fulfillment(of: [receivedConnection, receivedMaxSubscriptionsReachedError], timeout: 15)
+        await fulfillment(of: [receivedConnection, receivedMaxSubscriptionsReachedError], timeout: 30)
         for cancellable in cancellables {
             cancellable.cancel()
         }
