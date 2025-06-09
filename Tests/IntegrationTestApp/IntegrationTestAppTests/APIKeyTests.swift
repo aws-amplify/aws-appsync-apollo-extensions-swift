@@ -154,6 +154,7 @@ final class APIKeyTests: IntegrationTestBase {
         receivedMaxSubscriptionsReachedError.expectedFulfillmentCount = 5
         
         let sink = websocket.publisher.sink { event in
+            print("Received event: \(event)")
             if case .string(let message) = event {
                 if message.contains("start_ack") {
                     receivedConnection.fulfill()
