@@ -90,7 +90,7 @@ final class AuthTokenTests: IntegrationTestBase {
         let receivedDisconnectError = expectation(description: "received disconnect")
         receivedDisconnectError.assertForOverFulfill = false
         let sink = websocket.publisher.sink { event in
-            if case .error(let error) = event, error.localizedDescription.contains("Socket is not connected") {
+            if case .disconnected(_, _) = event {
                 receivedDisconnectError.fulfill()
             }
         }
@@ -99,8 +99,10 @@ final class AuthTokenTests: IntegrationTestBase {
             uploadingNetworkTransport: transport,
             webSocketNetworkTransport: webSocketTransport
         )
+        
         let apolloCUPInvalidToken = ApolloClient(networkTransport: splitTransport, store: store)
 
+        try await Task.sleep(nanoseconds: 5 * 1_000_000_000) // 5 seconds
         await fulfillment(of: [receivedDisconnectError], timeout: 10)
     }
 

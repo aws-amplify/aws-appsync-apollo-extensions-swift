@@ -79,36 +79,46 @@ public class AppSyncWebSocketClient: NSObject, ApolloWebSocket.WebSocketClient, 
     }
 
     public func connect() {
-        AppSyncApolloLogger.debug("Calling Connect")
-        guard connection?.state != .running else {
-            AppSyncApolloLogger.debug("[AppSyncWebSocketClient] WebSocket is already in connecting state")
-            return
-        }
-
-        subscribeToAppSyncResponse()
-
-        Task {
+        taskQueue.async { [weak self] in
+            guard let self else { return }
+            AppSyncApolloLogger.debug("Calling Connect")
+            guard connection?.state != .running else {
+                AppSyncApolloLogger.debug("[AppSyncWebSocketClient] WebSocket is already in connecting state")
+                return
+            }
+            
+            subscribeToAppSyncResponse()
+            
             AppSyncApolloLogger.debug("[AppSyncWebSocketClient] Creating new connection and starting read")
-            self.connection = try await createWebSocketConnection()
+            self.connection = try await self.createWebSocketConnection()
+            
             // Perform reading from a WebSocket in a separate task recursively to avoid blocking the execution.
-            Task { await self.startReadMessage() }
+            Task {
+                await self.startReadMessage()
+            }
+            
             self.connection?.resume()
         }
     }
 
     public func disconnect(forceTimeout: TimeInterval?) {
-        AppSyncApolloLogger.debug("Calling Disconnect")
-        heartBeatMonitorCancellable?.cancel()
-        guard connection?.state == .running else {
-            AppSyncApolloLogger.debug("[AppSyncWebSocketClient] client should be in connected state to trigger disconnect")
-            return
+        taskQueue.async { [weak self] in
+            guard let self else { return }
+            AppSyncApolloLogger.debug("Calling Disconnect")
+            heartBeatMonitorCancellable?.cancel()
+            guard connection?.state == .running else {
+                AppSyncApolloLogger.debug("[AppSyncWebSocketClient] client should be in connected state to trigger disconnect")
+                return
+            }
+            
+            connection?.cancel(with: .goingAway, reason: nil)
         }
-
-        connection?.cancel(with: .goingAway, reason: nil)
     }
 
     public func write(ping: Data, completion: (() -> Void)?) {
-        AppSyncApolloLogger.debug("Not called, not implemented.")
+        taskQueue.async {
+            AppSyncApolloLogger.debug("Not called, not implemented.")
+        }
     }
 
     public func write(string: String) {
