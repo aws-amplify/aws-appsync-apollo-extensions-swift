@@ -39,6 +39,31 @@ final class AppSyncWebSocketClientTests: XCTestCase {
         let webSocketClient = AppSyncWebSocketClient(endpointURL: endpoint, authorizer: MockAppSyncAuthorizer())
         await verifyConnected(webSocketClient)
     }
+    
+    func testConnect_ConcurrentInvoke() async throws {
+        guard let endpoint = try localWebSocketServer?.start() else {
+            XCTFail("Local WebSocket server failed to start")
+            return
+        }
+        let webSocketClient = AppSyncWebSocketClient(endpointURL: endpoint, authorizer: MockAppSyncAuthorizer())
+        let connectedExpectation = expectation(description: "WebSocket should received connected event only once")
+        connectedExpectation.expectedFulfillmentCount = 1
+        let sink = webSocketClient.publisher.sink { event in
+            switch event {
+            case .connected:
+                connectedExpectation.fulfill()
+            default:
+                XCTFail("No other type of event should be received")
+            }
+        }
+        
+        for _ in 1...100 {
+            let task = Task {
+                webSocketClient.connect()
+            }
+        }
+        await fulfillment(of: [connectedExpectation], timeout: 5)
+    }
 
     func testDisconnect_didDisconnectFromRemote() async throws {
         var cancellables = Set<AnyCancellable>()

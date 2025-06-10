@@ -138,6 +138,9 @@ final class APIKeyTests: IntegrationTestBase {
     }
 
     func testMaxSubscriptionReached() async throws {
+        let subscriptionLimit = 200
+        let failedSubscriptionCount = 5
+        
         let configuration = try AWSAppSyncConfiguration(with: .amplifyOutputs)
         let store = ApolloStore(cache: InMemoryNormalizedCache())
         let authorizer = APIKeyAuthorizer(apiKey: configuration.apiKey ?? "")
@@ -148,8 +151,11 @@ final class APIKeyTests: IntegrationTestBase {
         let websocket = AppSyncWebSocketClient(endpointURL: configuration.endpoint,
                                                authorizer: authorizer)
         let receivedConnection = expectation(description: "received connection")
+        receivedConnection.expectedFulfillmentCount = subscriptionLimit
+        
         let receivedMaxSubscriptionsReachedError = expectation(description: "received MaxSubscriptionsReachedError")
-        receivedConnection.expectedFulfillmentCount = 100
+        receivedMaxSubscriptionsReachedError.expectedFulfillmentCount = failedSubscriptionCount
+        
         let sink = websocket.publisher.sink { event in
             if case .string(let message) = event {
                 if message.contains("start_ack") {
@@ -167,13 +173,18 @@ final class APIKeyTests: IntegrationTestBase {
             webSocketNetworkTransport: webSocketTransport
         )
         let client = ApolloClient(networkTransport: splitTransport, store: store)
-
-        for _ in 1...101 {
-            _ = client.subscribe(subscription: OnCreateSubscription()) { _ in
-            }
+        
+        try await Task.sleep(nanoseconds: 5 * 1_000_000_000) // 5 seconds
+        
+        var cancellables = [Cancellable]()
+        for _ in 1...subscriptionLimit + failedSubscriptionCount {
+            cancellables.append(client.subscribe(subscription: OnCreateSubscription()) { _ in })
         }
-
+        
         await fulfillment(of: [receivedConnection, receivedMaxSubscriptionsReachedError], timeout: 10)
+        
+        for cancellable in cancellables {
+            cancellable.cancel()
+        }
     }
-
 }
