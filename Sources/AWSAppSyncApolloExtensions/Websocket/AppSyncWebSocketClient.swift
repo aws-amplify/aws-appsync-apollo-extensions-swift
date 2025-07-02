@@ -17,9 +17,23 @@ public class AppSyncWebSocketClient: NSObject, ApolloWebSocket.WebSocketClient, 
 
     // MARK: - ApolloWebSocket.WebSocketClient
 
-    public var request: URLRequest
     public var delegate: ApolloWebSocket.WebSocketClientDelegate?
     public var callbackQueue: DispatchQueue
+
+    private let requestLock = NSLock()
+    private var _request: URLRequest
+    public var request: URLRequest {
+        get {
+            requestLock.lock()
+            defer { requestLock.unlock() }
+            return _request
+        }
+        set {
+            requestLock.lock()
+            defer { requestLock.unlock() }
+            _request = newValue
+        }
+    }
 
     // MARK: - Public
 
@@ -71,7 +85,7 @@ public class AppSyncWebSocketClient: NSObject, ApolloWebSocket.WebSocketClient, 
         callbackQueue: DispatchQueue,
         authorizer: AppSyncAuthorizer
     ) {
-        self.request = URLRequest(url: appSyncRealTimeEndpoint(endpointURL))
+        self._request = URLRequest(url: appSyncRealTimeEndpoint(endpointURL))
         self.delegate = delegate
         self.callbackQueue = callbackQueue
         self.authorizer = authorizer
