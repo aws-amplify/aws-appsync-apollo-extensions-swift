@@ -119,6 +119,37 @@ final class AppSyncWebSocketClientTests: XCTestCase {
         await fulfillment(of: [messageReceivedExpectation], timeout: 5)
     }
 
+    func testConcurrentURLRequestAccess() async {
+        let endpoint = URL(string: "https://abc.appsync-api.us-east-1.amazonaws.com/graphql")!
+        
+        let websocket = AppSyncWebSocketClient(
+            endpointURL: endpoint,
+            authorizer: APIKeyAuthorizer(apiKey: "apiKey"))
+        
+        let raceConditionExpectation = expectation(description: "Race condition test")
+        raceConditionExpectation.expectedFulfillmentCount = 2
+        
+        let iterations = 1000
+        
+        // Thread 1: Continuous reading
+        DispatchQueue.global(qos: .userInitiated).async {
+            for _ in 0..<iterations {
+                _ = websocket.request.value(forHTTPHeaderField: "test-header")
+            }
+            raceConditionExpectation.fulfill()
+        }
+        
+        // Thread 2: Continuous writing
+        DispatchQueue.global(qos: .userInitiated).async {
+            for i in 0..<iterations {
+                websocket.request.setValue("value-\(i)", forHTTPHeaderField: "test-header")
+            }
+            raceConditionExpectation.fulfill()
+        }
+        
+        await fulfillment(of: [raceConditionExpectation], timeout: 5)
+    }
+
     private func verifyConnected(
            _ webSocketClient: AppSyncWebSocketClient,
            autoConnectOnNetworkStatusChange: Bool = false,
