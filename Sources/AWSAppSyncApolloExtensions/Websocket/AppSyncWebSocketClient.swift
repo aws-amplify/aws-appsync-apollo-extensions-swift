@@ -17,7 +17,7 @@ public class AppSyncWebSocketClient: NSObject, ApolloWebSocket.WebSocketClient, 
 
     // MARK: - ApolloWebSocket.WebSocketClient
 
-    public var delegate: ApolloWebSocket.WebSocketClientDelegate?
+    public weak var delegate: ApolloWebSocket.WebSocketClientDelegate?
     public var callbackQueue: DispatchQueue
 
     private let requestLock = NSLock()
