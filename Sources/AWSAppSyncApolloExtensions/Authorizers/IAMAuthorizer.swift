@@ -17,7 +17,9 @@ public class IAMAuthorizer: AppSyncAuthorizer {
     }
 
     public func getHttpAuthorizationHeaders(request: URLRequest) async throws -> [String: String] {
-        try await signRequest(request).allHTTPHeaderFields ?? [:]
+        var urlRequest = request
+        urlRequest.setValue(urlRequest.url?.host, forHTTPHeaderField: "host")
+        return try await signRequest(urlRequest).allHTTPHeaderFields ?? [:]
     }
 
     public func getWebsocketConnectionHeaders(endpoint: URL) async throws -> [String: String] {
@@ -49,6 +51,7 @@ public class IAMAuthorizer: AppSyncAuthorizer {
         urlRequest.setValue("application/json, text/javascript", forHTTPHeaderField: "accept")
         urlRequest.setValue("amz-1.0", forHTTPHeaderField: "content-encoding")
         urlRequest.setValue("application/json; charset=UTF-8", forHTTPHeaderField: "Content-Type")
+        urlRequest.setValue(url.host, forHTTPHeaderField: "host")
 
         urlRequest.httpBody = httpBody
         return urlRequest

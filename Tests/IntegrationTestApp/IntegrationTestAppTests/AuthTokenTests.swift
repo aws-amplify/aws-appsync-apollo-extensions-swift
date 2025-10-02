@@ -18,6 +18,10 @@ import XCTest
 
 final class AuthTokenTests: IntegrationTestBase {
 
+    override func tearDown() async throws {
+        await AuthSignInHelper.signOut()
+    }
+    
     func testAuthTokenApolloClientMutation() async throws {
         try await signIn()
         let completed = expectation(description: "mutation completed")
