@@ -19,7 +19,7 @@ final class IAMAuthorizerTests: XCTestCase {
     func testGetHttpAuthorizationHeaders() async throws {
         let headers = try await authorizer.getHttpAuthorizationHeaders(request: APIKeyAuthorizerTests.urlRequest)
         XCTAssertEqual(headers.count, 1)
-        XCTAssertEqual(headers["Host"], APIKeyAuthorizerTests.urlRequest.url?.host())
+        XCTAssertEqual(headers["Host"], APIKeyAuthorizerTests.urlRequest.url?.host)
     }
 
     func testGetWebsocketConnectionHeaders() async throws {
@@ -29,7 +29,7 @@ final class IAMAuthorizerTests: XCTestCase {
         XCTAssertEqual(headers["Accept"], "application/json, text/javascript")
         XCTAssertEqual(headers["Content-Encoding"], "amz-1.0")
         XCTAssertEqual(headers["Content-Type"], "application/json; charset=UTF-8")
-        XCTAssertEqual(headers["Host"], APIKeyAuthorizerTests.endpoint.host())
+        XCTAssertEqual(headers["Host"], APIKeyAuthorizerTests.endpoint.host)
     }
 
     func testGetWebSocketSubscriptionPayload() async throws {
@@ -39,6 +39,6 @@ final class IAMAuthorizerTests: XCTestCase {
         XCTAssertEqual(headers["Accept"], "application/json, text/javascript")
         XCTAssertEqual(headers["Content-Encoding"], "amz-1.0")
         XCTAssertEqual(headers["Content-Type"], "application/json; charset=UTF-8")
-        XCTAssertEqual(headers["Host"], APIKeyAuthorizerTests.endpoint.host())
+        XCTAssertEqual(headers["Host"], APIKeyAuthorizerTests.endpoint.host)
     }
 }
