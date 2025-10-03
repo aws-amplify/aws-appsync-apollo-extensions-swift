@@ -39,4 +39,6 @@ jobs:
           -scheme IntegrationTestApp \
           -destination "platform=iOS Simulator,name=iPhone 15,OS=latest" \
           -sdk iphonesimulator \
+          -test-iterations 3 -retry-tests-on-failure \
+          -parallel-testing-enabled NO -test-repetition-relaunch-enabled YES \
           | xcpretty --simple --color --report junit && exit ${PIPESTATUS[0]}
