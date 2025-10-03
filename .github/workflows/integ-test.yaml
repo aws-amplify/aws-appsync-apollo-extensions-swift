@@ -17,7 +17,7 @@ jobs:
   integ-test:
     name: "Integration Test"
     environment: "IntegTest"
-    runs-on: macos-14
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
         with:
@@ -37,6 +37,8 @@ jobs:
         run: |
           xcodebuild test \
           -scheme IntegrationTestApp \
-          -destination "platform=iOS Simulator,name=iPhone 15,OS=latest" \
+          -destination "platform=iOS Simulator,name=iPhone 16 Pro Max,OS=18.5" \
           -sdk iphonesimulator \
+          -test-iterations 3 -retry-tests-on-failure \
+          -parallel-testing-enabled NO -test-repetition-relaunch-enabled YES \
           | xcpretty --simple --color --report junit && exit ${PIPESTATUS[0]}
