@@ -21,7 +21,7 @@ jobs:
   build-on-minimum-supported-platforms:
     name: ${{ matrix.os }}
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         include:
           - scheme: AWSAppSyncApolloExtensions
