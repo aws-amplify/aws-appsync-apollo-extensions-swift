@@ -26,28 +26,28 @@ jobs:
         include:
           - scheme: AWSAppSyncApolloExtensions
             os: iOS # Swift 5.9 (Xcode 15.0), iOS v13
-            sdk: iphonesimulator18.0
-            destination: platform=iOS Simulator,name=iPhone 16 Pro Max,OS=18.0
+            sdk: iphonesimulator
+            destination: platform=iOS Simulator,name=iPhone 16 Pro Max,OS=18.5
             runner: macos-15
-            app: Xcode_16.0.0
+            app: Xcode_16.4.0
           - scheme: AWSAppSyncApolloExtensions
             os: macOS # Swift 5.9 (Xcode 15.0), macOS v10_15
-            sdk: macosx15.0
-            destination: platform=OS X,arch=x86_64
+            sdk: macosx
+            destination: platform=macOS,arch=arm64
             runner: macos-15
-            app: Xcode_16.0.0
+            app: Xcode_16.4.0
           - scheme: AWSAppSyncApolloExtensions
             os: watchOS # Swift 5.9 (Xcode 15.0), watchOS v9
             sdk: watchsimulator
-            destination: platform=watchOS Simulator,name=Apple Watch SE (44mm) (2nd generation),OS=11.0
+            destination: platform=watchOS Simulator,name=Apple Watch Series 10 (46mm),OS=11.5
             runner: macos-15
-            app: Xcode_16.0.0
+            app: Xcode_16.4.0
           - scheme: AWSAppSyncApolloExtensions
             os: tvOS # Swift 5.9 (Xcode 15.0), tvOS v13
             sdk: appletvsimulator
-            destination: platform=tvOS Simulator,name=Apple TV 4K (3rd generation),OS=18.0
+            destination: platform=tvOS Simulator,name=Apple TV 4K (3rd generation),OS=18.5
             runner: macos-15
-            app: Xcode_16.0.0
+            app: Xcode_16.4.0
 
     runs-on: ${{ matrix.runner }}
     steps:
