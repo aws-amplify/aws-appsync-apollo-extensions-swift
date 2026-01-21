@@ -20,11 +20,11 @@ public enum SchemaMetadata: ApolloAPI.SchemaMetadata {
 
   public static func objectType(forTypename typename: String) -> ApolloAPI.Object? {
     switch typename {
-    case "Mutation": return AppSyncAPI.Objects.Mutation
-    case "Todo": return AppSyncAPI.Objects.Todo
-    case "Subscription": return AppSyncAPI.Objects.Subscription
-    case "Query": return AppSyncAPI.Objects.Query
     case "ModelTodoConnection": return AppSyncAPI.Objects.ModelTodoConnection
+    case "Mutation": return AppSyncAPI.Objects.Mutation
+    case "Query": return AppSyncAPI.Objects.Query
+    case "Subscription": return AppSyncAPI.Objects.Subscription
+    case "Todo": return AppSyncAPI.Objects.Todo
     default: return nil
     }
   }

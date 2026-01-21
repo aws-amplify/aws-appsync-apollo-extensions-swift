@@ -26,6 +26,9 @@ public class UpdateTodoMutation: GraphQLMutation {
     public static var __selections: [ApolloAPI.Selection] { [
       .field("updateTodo", UpdateTodo?.self, arguments: ["input": .variable("updateTodoInput")]),
     ] }
+    public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+      UpdateTodoMutation.Data.self
+    ] }
 
     public var updateTodo: UpdateTodo? { __data["updateTodo"] }
 
@@ -44,6 +47,9 @@ public class UpdateTodoMutation: GraphQLMutation {
         .field("createdAt", AppSyncAPI.AWSDateTime.self),
         .field("content", String?.self),
         .field("owner", String?.self),
+      ] }
+      public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+        UpdateTodoMutation.Data.UpdateTodo.self
       ] }
 
       public var id: AppSyncAPI.ID { __data["id"] }

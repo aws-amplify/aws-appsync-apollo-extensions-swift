@@ -20,6 +20,9 @@ public class MyQuery: GraphQLQuery {
     public static var __selections: [ApolloAPI.Selection] { [
       .field("listTodos", ListTodos?.self),
     ] }
+    public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+      MyQuery.Data.self
+    ] }
 
     public var listTodos: ListTodos? { __data["listTodos"] }
 
@@ -35,6 +38,9 @@ public class MyQuery: GraphQLQuery {
         .field("__typename", String.self),
         .field("items", [Item?].self),
         .field("nextToken", String?.self),
+      ] }
+      public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+        MyQuery.Data.ListTodos.self
       ] }
 
       public var items: [Item?] { __data["items"] }
@@ -55,6 +61,9 @@ public class MyQuery: GraphQLQuery {
           .field("createdAt", AppSyncAPI.AWSDateTime.self),
           .field("content", String?.self),
           .field("owner", String?.self),
+        ] }
+        public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+          MyQuery.Data.ListTodos.Item.self
         ] }
 
         public var id: AppSyncAPI.ID { __data["id"] }

@@ -20,6 +20,9 @@ public class OnCreateSubscription: GraphQLSubscription {
     public static var __selections: [ApolloAPI.Selection] { [
       .field("onCreateTodo", OnCreateTodo?.self),
     ] }
+    public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+      OnCreateSubscription.Data.self
+    ] }
 
     public var onCreateTodo: OnCreateTodo? { __data["onCreateTodo"] }
 
@@ -38,6 +41,9 @@ public class OnCreateSubscription: GraphQLSubscription {
         .field("createdAt", AppSyncAPI.AWSDateTime.self),
         .field("content", String?.self),
         .field("owner", String?.self),
+      ] }
+      public static var __fulfilledFragments: [any ApolloAPI.SelectionSet.Type] { [
+        OnCreateSubscription.Data.OnCreateTodo.self
       ] }
 
       public var id: AppSyncAPI.ID { __data["id"] }
