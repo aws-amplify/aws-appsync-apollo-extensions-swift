@@ -27,7 +27,7 @@ jobs:
           - scheme: AWSAppSyncApolloExtensions
             os: iOS # Swift 5.9 (Xcode 15.0), iOS v13
             sdk: iphonesimulator18.0
-            destination: platform=iOS Simulator,name=iPhone 16,OS=18.0
+            destination: platform=iOS Simulator,name=iPhone 16 Pro Max,OS=18.0
             runner: macos-15
             app: Xcode_16.0.0
           - scheme: AWSAppSyncApolloExtensions
@@ -38,13 +38,13 @@ jobs:
             app: Xcode_16.0.0
           - scheme: AWSAppSyncApolloExtensions
             os: watchOS # Swift 5.9 (Xcode 15.0), watchOS v9
-            sdk: watchsimulator11.0
-            destination: platform=watchOS Simulator,name=Apple Watch Series 8 (45mm),OS=11.0
+            sdk: watchsimulator
+            destination: platform=watchOS Simulator,name=Apple Watch SE (44mm) (2nd generation),OS=11.0
             runner: macos-15
             app: Xcode_16.0.0
           - scheme: AWSAppSyncApolloExtensions
             os: tvOS # Swift 5.9 (Xcode 15.0), tvOS v13
-            sdk: appletvsimulator18.0
+            sdk: appletvsimulator
             destination: platform=tvOS Simulator,name=Apple TV 4K (3rd generation),OS=18.0
             runner: macos-15
             app: Xcode_16.0.0
