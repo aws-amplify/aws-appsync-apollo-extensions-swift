@@ -1,0 +1,11 @@
+.DS_Store
+/.build
+build/
+
+# amplify
+node_modules
+.amplify
+amplify_outputs*
+amplifyconfiguration*
+
+AppSyncAPI/.build

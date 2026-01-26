@@ -6,6 +6,7 @@ import ApolloAPI
 public extension Objects {
   static let ModelTodoConnection = ApolloAPI.Object(
     typename: "ModelTodoConnection",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }

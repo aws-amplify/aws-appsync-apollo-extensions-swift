@@ -21,33 +21,33 @@ jobs:
   build-on-minimum-supported-platforms:
     name: ${{ matrix.os }}
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         include:
           - scheme: AWSAppSyncApolloExtensions
             os: iOS # Swift 5.9 (Xcode 15.0), iOS v13
-            sdk: iphonesimulator17.0
-            destination: platform=iOS Simulator,name=iPhone 14,OS=17.0
-            runner: macos-13
-            app: Xcode_15.0.1
+            sdk: iphonesimulator
+            destination: platform=iOS Simulator,name=iPhone 16 Pro Max,OS=18.5
+            runner: macos-15
+            app: Xcode_16.4.0
           - scheme: AWSAppSyncApolloExtensions
             os: macOS # Swift 5.9 (Xcode 15.0), macOS v10_15
-            sdk: macosx14.0
-            destination: platform=OS X,arch=x86_64
-            runner: macos-13
-            app: Xcode_15.0.1
+            sdk: macosx
+            destination: platform=macOS,arch=arm64
+            runner: macos-15
+            app: Xcode_16.4.0
           - scheme: AWSAppSyncApolloExtensions
             os: watchOS # Swift 5.9 (Xcode 15.0), watchOS v9
-            sdk: watchsimulator10.0
-            destination: platform=watchOS Simulator,name=Apple Watch Series 8 (45mm),OS=10.0
-            runner: macos-13
-            app: Xcode_15.0.1
+            sdk: watchsimulator
+            destination: platform=watchOS Simulator,name=Apple Watch Series 10 (46mm),OS=11.5
+            runner: macos-15
+            app: Xcode_16.4.0
           - scheme: AWSAppSyncApolloExtensions
             os: tvOS # Swift 5.9 (Xcode 15.0), tvOS v13
-            sdk: appletvsimulator17.0
-            destination: platform=tvOS Simulator,name=Apple TV 4K (3rd generation),OS=17.0
-            runner: macos-13
-            app: Xcode_15.0.1
+            sdk: appletvsimulator
+            destination: platform=tvOS Simulator,name=Apple TV 4K (3rd generation),OS=18.5
+            runner: macos-15
+            app: Xcode_16.4.0
 
     runs-on: ${{ matrix.runner }}
     steps:

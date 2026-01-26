@@ -6,6 +6,7 @@ import ApolloAPI
 public extension Objects {
   static let Todo = ApolloAPI.Object(
     typename: "Todo",
-    implementedInterfaces: []
+    implementedInterfaces: [],
+    keyFields: nil
   )
 }
